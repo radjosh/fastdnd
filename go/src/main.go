@@ -5,18 +5,19 @@ import (
 	"encoding/json"
 	"fmt"
 	"errors"
-	"io"
+	// "io"
 	"net/http"
 	"os"
 )
 
 import "dataProcessors"
 
-func monsterPtrToJSON(m *dataProcessors.Monster) string {
+func monsterPtrToJSON(m *dataProcessors.Monster) []byte {
 	var buffer bytes.Buffer
 	json.NewEncoder(&buffer).Encode(m)
-	fmt.Println("\nUsing Encoder:\n" + buffer.String())
-	return buffer.String()
+	// fmt.Println("\nUsing Encoder:\n" + buffer.String())
+	return buffer.Bytes()
+	// return buffer.String()
 }
 
 func getMonster(w http.ResponseWriter, r *http.Request) {
@@ -26,7 +27,11 @@ func getMonster(w http.ResponseWriter, r *http.Request) {
 	monsterPtr := new(dataProcessors.Monster)
 	*monsterPtr = dataProcessors.Monsters[monsterName]
 	payload := monsterPtrToJSON(monsterPtr)
-	io.WriteString(w, payload)
+	// io.WriteString(w, payload.String())
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(payload)
 }
 
 func main() {
