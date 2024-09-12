@@ -39,6 +39,12 @@ type Monster struct {
 	Int string
 	Wis string
 	Cha string
+	Skill string
+	Passive string
+	Languages string
+	Cr string
+	Spells string
+	Description string
 }
 var Monsters = make(map[string]Monster)
 func init() {
@@ -78,6 +84,18 @@ func init() {
 						monsterPtr.Wis = strings.Trim(e.Text(), " ")
 					case "cha":
 						monsterPtr.Cha = strings.Trim(e.Text(), " ")
+					case "skill":
+						monsterPtr.Skill = strings.Trim(e.Text(), " ")
+					case "passive":
+						monsterPtr.Passive = strings.Trim(e.Text(), " ")
+					case "languages":
+						monsterPtr.Languages = strings.Trim(e.Text(), " ")
+					case "cr":
+						monsterPtr.Cr = strings.Trim(e.Text(), " ")
+					case "spells":
+						monsterPtr.Spells = strings.Trim(e.Text(), " ")
+					case "description":
+						monsterPtr.Description = strings.Trim(e.Text(), " ")
 				}
       //} else {
         //for _, f := range e.ChildElements() {
