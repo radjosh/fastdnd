@@ -47,6 +47,7 @@ type Monster struct {
 	Spells string
 	Description string
 	Traits []map[string]string
+	Actions []map[string]string
 }
 var Monsters = make(map[string]Monster)
 func init() {
@@ -112,6 +113,19 @@ func init() {
           }
         }
 				monsterPtr.Traits = append(monsterPtr.Traits, trait)
+      } else if e.Tag == "action" {
+				action := make(map[string]string)	
+        for _, f := range e.ChildElements() {
+          switch f.Tag {
+            case "name":
+							action["name"] = f.Text()
+            case "text":
+							action["text"] = f.Text()
+            case "attack":
+							action["attack"] = "Attack: " + f.Text()
+          }
+        }
+				monsterPtr.Actions = append(monsterPtr.Actions, action)
       }
 		Monsters[monsterPtr.Name] = *monsterPtr
   }
