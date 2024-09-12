@@ -48,7 +48,9 @@ type Monster struct {
 	Description string
 	Traits []map[string]string
 	Actions []map[string]string
+	Legendary []map[string]string
 }
+
 var Monsters = make(map[string]Monster)
 func init() {
 	doc := etree.NewDocument()
@@ -63,7 +65,7 @@ func init() {
   for _, m := range root.SelectElements("monster") {
 		monsterPtr := new(Monster)
     for _, e := range m.ChildElements() {
-      if e.Tag != "trait" && e.Tag != "action" {
+      if e.Tag != "trait" && e.Tag != "action" && e.Tag != "legendary" {
 				switch e.Tag {
 					case "name":
 						monsterPtr.Name = strings.ToLower(strings.Trim(e.Text(), " "))
@@ -126,6 +128,19 @@ func init() {
           }
         }
 				monsterPtr.Actions = append(monsterPtr.Actions, action)
+      } else if e.Tag == "legendary" {
+				legendary := make(map[string]string)	
+        for _, f := range e.ChildElements() {
+          switch f.Tag {
+            case "name":
+							legendary["name"] = f.Text()
+            case "text":
+							legendary["text"] = f.Text()
+            case "attack":
+							legendary["attack"] = "Attack: " + f.Text()
+          }
+        }
+				monsterPtr.Legendary = append(monsterPtr.Legendary, legendary)
       }
 		Monsters[monsterPtr.Name] = *monsterPtr
   }
