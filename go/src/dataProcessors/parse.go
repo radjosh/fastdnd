@@ -57,7 +57,7 @@ func init() {
       if e.Tag != "trait" && e.Tag != "action" {
 				switch e.Tag {
 					case "name":
-						monsterPtr.Name = strings.Trim(e.Text(), " ")
+						monsterPtr.Name = strings.ToLower(strings.Trim(e.Text(), " "))
 					case "size":
 						monsterPtr.Size = strings.Trim(e.Text(), " ")
 					case "alignment":
