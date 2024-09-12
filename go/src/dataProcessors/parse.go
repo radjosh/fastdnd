@@ -26,6 +26,7 @@ import (
 	"utils/etree"
 )
 
+
 type Monster struct {
 	Name string
 	Size string
@@ -45,6 +46,7 @@ type Monster struct {
 	Cr string
 	Spells string
 	Description string
+	Traits []map[string]string
 }
 var Monsters = make(map[string]Monster)
 func init() {
@@ -97,25 +99,24 @@ func init() {
 					case "description":
 						monsterPtr.Description = strings.Trim(e.Text(), " ")
 				}
-      //} else {
-        //for _, f := range e.ChildElements() {
-          //switch f.Tag {
-            //case "name":
-            //fmt.Println(e.Tag, f.Text()) // e is not a typo
-            //case "text":
-              //fmt.Println(" ", f.Text())
-            //case "attack":
-              //fmt.Println(" ", f.Tag, f.Text())
-          //}
-        //}
-			//}
-			}
-    }
+      } else if e.Tag == "trait"{
+				trait := make(map[string]string)	
+        for _, f := range e.ChildElements() {
+          switch f.Tag {
+            case "name":
+							// fmt.Println(e.Tag, f.Text()) // e is not a typo
+							trait["name"] = f.Text()
+            case "text":
+              // fmt.Println(" ", f.Text())
+							trait["text"] = f.Text()
+            case "attack":
+              // fmt.Println(" ", f.Tag, f.Text())
+							trait["attack"] = "Attack: " + f.Text()
+          }
+				monsterPtr.Traits = append(monsterPtr.Traits, trait)
+        }
+      }
 		Monsters[monsterPtr.Name] = *monsterPtr
   }
-	//for _, monster := range(Monsters) {
-		//fmt.Println(monster)
-	//}
-
-	// fmt.Println(Monsters["Werebear"])
+}
 }
