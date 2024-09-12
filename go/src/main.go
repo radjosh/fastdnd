@@ -17,7 +17,6 @@ func monsterPtrToJSON(m *dataProcessors.Monster) []byte {
 	json.NewEncoder(&buffer).Encode(m)
 	// fmt.Println("\nUsing Encoder:\n" + buffer.String())
 	return buffer.Bytes()
-	// return buffer.String()
 }
 
 func getMonster(w http.ResponseWriter, r *http.Request) {
