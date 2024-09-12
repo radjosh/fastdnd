@@ -30,6 +30,7 @@ func getMonster(w http.ResponseWriter, r *http.Request) {
 	// io.WriteString(w, payload.String())
 
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusOK)
 	w.Write(payload)
 }
