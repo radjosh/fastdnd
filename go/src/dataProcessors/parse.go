@@ -26,6 +26,7 @@ import (
 	"utils/etree"
 )
 
+
 type Monster struct {
 	Name string
 	Size string
@@ -45,7 +46,11 @@ type Monster struct {
 	Cr string
 	Spells string
 	Description string
+	Traits []map[string]string
+	Actions []map[string]string
+	Legendary []map[string]string
 }
+
 var Monsters = make(map[string]Monster)
 func init() {
 	doc := etree.NewDocument()
@@ -60,7 +65,7 @@ func init() {
   for _, m := range root.SelectElements("monster") {
 		monsterPtr := new(Monster)
     for _, e := range m.ChildElements() {
-      if e.Tag != "trait" && e.Tag != "action" {
+      if e.Tag != "trait" && e.Tag != "action" && e.Tag != "legendary" {
 				switch e.Tag {
 					case "name":
 						monsterPtr.Name = strings.ToLower(strings.Trim(e.Text(), " "))
@@ -97,25 +102,47 @@ func init() {
 					case "description":
 						monsterPtr.Description = strings.Trim(e.Text(), " ")
 				}
-      //} else {
-        //for _, f := range e.ChildElements() {
-          //switch f.Tag {
-            //case "name":
-            //fmt.Println(e.Tag, f.Text()) // e is not a typo
-            //case "text":
-              //fmt.Println(" ", f.Text())
-            //case "attack":
-              //fmt.Println(" ", f.Tag, f.Text())
-          //}
-        //}
-			//}
-			}
-    }
+      } else if e.Tag == "trait" {
+				trait := make(map[string]string)	
+        for _, f := range e.ChildElements() {
+          switch f.Tag {
+            case "name":
+							trait["name"] = f.Text()
+            case "text":
+							trait["text"] = f.Text()
+            case "attack":
+							trait["attack"] = "Attack: " + f.Text()
+          }
+        }
+				monsterPtr.Traits = append(monsterPtr.Traits, trait)
+      } else if e.Tag == "action" {
+				action := make(map[string]string)	
+        for _, f := range e.ChildElements() {
+          switch f.Tag {
+            case "name":
+							action["name"] = f.Text()
+            case "text":
+							action["text"] = f.Text()
+            case "attack":
+							action["attack"] = "Attack: " + f.Text()
+          }
+        }
+				monsterPtr.Actions = append(monsterPtr.Actions, action)
+      } else if e.Tag == "legendary" {
+				legendary := make(map[string]string)	
+        for _, f := range e.ChildElements() {
+          switch f.Tag {
+            case "name":
+							legendary["name"] = f.Text()
+            case "text":
+							legendary["text"] = f.Text()
+            case "attack":
+							legendary["attack"] = "Attack: " + f.Text()
+          }
+        }
+				monsterPtr.Legendary = append(monsterPtr.Legendary, legendary)
+      }
 		Monsters[monsterPtr.Name] = *monsterPtr
   }
-	//for _, monster := range(Monsters) {
-		//fmt.Println(monster)
-	//}
-
-	// fmt.Println(Monsters["Werebear"])
+}
 }
