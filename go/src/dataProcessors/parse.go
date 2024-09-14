@@ -101,6 +101,14 @@ func init() {
 						monsterPtr.Spells = strings.Trim(e.Text(), " ")
 					case "description":
 						monsterPtr.Description = strings.Trim(e.Text(), " ")
+					case "immune":
+						monsterPtr.Immune = strings.Trim(e.Text(), " ")
+					case "senses":
+						monsterPtr.Senses = strings.Trim(e.Text(), " ")
+					case "vulnerable":
+						monsterPtr.Vulnerable = strings.Trim(e.Text(), " ")
+					case "resist":
+						monsterPtr.Resist = strings.Trim(e.Text(), " ")
 				}
       } else if e.Tag == "trait" {
 				trait := make(map[string]string)	
