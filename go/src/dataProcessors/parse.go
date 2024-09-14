@@ -13,7 +13,6 @@ package dataProcessors
  * leaving these sloppy notes here until I can get some intuition for it
  */
 
-
 /*
  * This one uses the 3rd-party module "etree" for more fast and loose (and better?) xml parsing
  * etree is very forgiving of mismatches between struct and xml source
@@ -23,7 +22,8 @@ import (
 	// "fmt"
 	"strings"
 
-	"utils/etree"
+	"github.com/felixge/etree"
+	// "utils/etree"
 )
 
 
@@ -49,6 +49,10 @@ type Monster struct {
 	Traits []map[string]string
 	Actions []map[string]string
 	Legendary []map[string]string
+	Immune string
+	Senses string
+	Vulnerable string
+	Resist string
 }
 
 var Monsters = make(map[string]Monster)

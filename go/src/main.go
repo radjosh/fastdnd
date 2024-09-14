@@ -3,14 +3,14 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"errors"
+	"fmt"
+
 	// "io"
 	"net/http"
 	"os"
+	"src/dataProcessors"
 )
-
-import "dataProcessors"
 
 func monsterPtrToJSON(m *dataProcessors.Monster) []byte {
 	var buffer bytes.Buffer
