@@ -1,3 +1,4 @@
+# what this is
 go backend api for dnd monster manual
 
 simple MVP receiving API get requests:
