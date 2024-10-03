@@ -1,16 +1,13 @@
 package dataProcessors
 
 /* todo:
- * server. should we keep the map loader in a separate file?
+ *
  */
 
 /*
  * it appears that go is super picky about where files live
  * I couldn't get this to work until I moved it into its own package
  * AND SUBDIRECTORY
- *
- * also I needed to run "go build" in that subdir
- * leaving these sloppy notes here until I can get some intuition for it
  */
 
 /*
