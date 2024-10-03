@@ -20,10 +20,10 @@ package dataProcessors
 
 import (
 	// "fmt"
+
 	"strings"
 
 	"github.com/felixge/etree"
-	// "utils/etree"
 )
 
 
@@ -55,7 +55,10 @@ type Monster struct {
 	Resist string
 }
 
-var Monsters = make(map[string]Monster)
+var Monsters = make(map[string]Monster) // array of maps with 
+																				// k=string(monster name)
+																				// v=Monster(the struct)
+
 func init() {
 	doc := etree.NewDocument()
 	DATADIR := "../../data/"
