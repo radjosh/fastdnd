@@ -9,7 +9,7 @@ import (
 	// "io"
 	"net/http"
 	"os"
-	"main/dataProcessors"
+	"github.com/radjosh/gomm/go/src/dataProcessors"
 )
 
 func monsterPtrToJSON(m *dataProcessors.Monster) []byte {
