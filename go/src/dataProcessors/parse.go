@@ -27,6 +27,7 @@ import (
 type Monster struct {
 	Name string
 	Size string
+	Type string
 	Alignment string
 	Ac string
 	Hp string
@@ -37,16 +38,20 @@ type Monster struct {
 	Int string
 	Wis string
 	Cha string
+	Save string
 	Skill string
 	Passive string
 	Languages string
 	Cr string
 	Spells string
+	Slots string
 	Description string
 	Traits []map[string]string
 	Actions []map[string]string
+	Reactions []map[string]string
 	Legendary []map[string]string
 	Immune string
+	ConditionImmune string
 	Senses string
 	Vulnerable string
 	Resist string
@@ -74,12 +79,16 @@ func init() {
 						monsterPtr.Name = strings.ToLower(strings.Trim(e.Text(), " "))
 					case "size":
 						monsterPtr.Size = strings.Trim(e.Text(), " ")
+					case "type":
+						monsterPtr.Type = strings.Trim(e.Text(), " ")
 					case "alignment":
 						monsterPtr.Alignment = strings.Trim(e.Text(), " ")
 					case "ac":
 						monsterPtr.Ac = strings.Trim(e.Text(), " ")
 					case "hp":
 						monsterPtr.Hp = strings.Trim(e.Text(), " ")
+					case "speed":
+						monsterPtr.Speed = strings.Trim(e.Text(), " ")
 					case "str":
 						monsterPtr.Str = strings.Trim(e.Text(), " ")
 					case "dex":
@@ -92,6 +101,8 @@ func init() {
 						monsterPtr.Wis = strings.Trim(e.Text(), " ")
 					case "cha":
 						monsterPtr.Cha = strings.Trim(e.Text(), " ")
+					case "save":
+						monsterPtr.Save = strings.Trim(e.Text(), " ")
 					case "skill":
 						monsterPtr.Skill = strings.Trim(e.Text(), " ")
 					case "passive":
@@ -100,12 +111,12 @@ func init() {
 						monsterPtr.Languages = strings.Trim(e.Text(), " ")
 					case "cr":
 						monsterPtr.Cr = strings.Trim(e.Text(), " ")
-					case "spells":
-						monsterPtr.Spells = strings.Trim(e.Text(), " ")
 					case "description":
 						monsterPtr.Description = strings.Trim(e.Text(), " ")
 					case "immune":
 						monsterPtr.Immune = strings.Trim(e.Text(), " ")
+					case "conditionImmune":
+						monsterPtr.ConditionImmune = strings.Trim(e.Text(), " ")
 					case "senses":
 						monsterPtr.Senses = strings.Trim(e.Text(), " ")
 					case "vulnerable":
@@ -138,6 +149,19 @@ func init() {
 							}
 						}
 						monsterPtr.Actions = append(monsterPtr.Actions, action)
+					case "reaction":
+						reaction := make(map[string]string)
+						for _, f := range e.ChildElements() {
+							switch f.Tag {
+								case "name":
+									reaction["name"] = f.Text()
+								case "text":
+									reaction["text"] = f.Text()
+								case "attack":
+									reaction["attack"] = "Attack: " + f.Text()
+							}
+						}
+						monsterPtr.Reactions = append(monsterPtr.Reactions, reaction)
 					case "legendary":
 						legendary := make(map[string]string)	
 						for _, f := range e.ChildElements() {
@@ -151,6 +175,10 @@ func init() {
 							}
 						}
 						monsterPtr.Legendary = append(monsterPtr.Legendary, legendary)
+					case "spells":
+						monsterPtr.Spells = strings.Trim(e.Text(), " ")
+					case "slots":
+						monsterPtr.Slots = strings.Trim(e.Text(), " ")
 				}
 		Monsters[monsterPtr.Name] = *monsterPtr
   }
